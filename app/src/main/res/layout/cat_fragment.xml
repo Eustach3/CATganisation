@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/colorLightBlue"
+    android:layout_weight="6"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/fragment_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fragment_image_top_margin"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:id="@+id/fragment_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing name"
+        android:layout_marginTop="@dimen/fragment_text_top_margin"
+        style="@style/Title"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/fragment_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing name"
+        android:layout_marginTop="@dimen/fragment_text_top_margin"
+        style="@style/Description"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/fragment_country_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing name"
+        android:layout_marginTop="@dimen/fragment_text_top_margin"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/fragment_temperament"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing name"
+        android:layout_marginTop="@dimen/fragment_text_top_margin"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:id="@+id/fragment_wikipedia_link"
+        android:autoLink="all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Testing name"
+        android:layout_marginTop="@dimen/fragment_text_top_margin"
+        style="@style/Description"
+        android:layout_weight="1"
+        />
+
+
+
+</LinearLayout>

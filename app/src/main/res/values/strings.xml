@@ -5,6 +5,7 @@
     <string name="password">Password</string>
     <string name="login_button">LOGIN</string>
     <string-array name="Countries">
+        <item>No filters</item>
         <item>AE</item>
         <item>AU</item>
         <item>CA</item>
@@ -25,4 +26,9 @@
         <item>TH</item>
         <item>US</item>
     </string-array>
+
+    <string name="breed_name">Breed: %1$s</string>
+    <string name="country_code">Country Code: %1$s</string>
+    <string name="temperament">Temperament: %1$s</string>
+    <string name="wikipedia_link">Link: %1$s</string>
 </resources>

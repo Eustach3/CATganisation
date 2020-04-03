@@ -15,7 +15,7 @@ class CatsListViewModel : ViewModel() {
 
     @Inject
     lateinit var catService: CatService
-    val compDisposable = CompositeDisposable()
+    private val compDisposable = CompositeDisposable()
     val cats= MutableLiveData<List<Cat>>()
     val catsLoading = MutableLiveData<Boolean>()
     val catsLoadingError = MutableLiveData<Boolean>()
@@ -54,4 +54,6 @@ class CatsListViewModel : ViewModel() {
         super.onCleared()
         compDisposable.clear()
     }
+
+
 }

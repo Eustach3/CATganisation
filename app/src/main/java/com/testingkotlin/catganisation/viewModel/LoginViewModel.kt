@@ -20,10 +20,12 @@ class LoginViewModel : ViewModel() {
             usernameError.value = true
             return
         }
+        usernameError.value = false
         if (password.isBlank()) {
             passwordError.value = true
             return
         }
+        passwordError.value = false
         loading.value = true
 
         //TODO implement api/database check for user access data

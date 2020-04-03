@@ -5,23 +5,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.testingkotlin.catganisation.R
+import com.testingkotlin.catganisation.model.Cat
 import com.testingkotlin.catganisation.viewModel.CatsListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CatListAdapter.OnItemClickListener {
 
+    private val catFragmentClass: String? = "catDetailFragment"
     lateinit var listViewModel: CatsListViewModel
-    private val recyclerAdapter = CatListAdapter()
-    val spinner = recycler_filter
-    var currentFilterCode = "All"
+    private val recyclerAdapter = CatListAdapter(this)
+    lateinit var spinner: Spinner
+    var currentFilterCode = "No filter"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        spinner = recycler_filter
         listViewModel = ViewModelProviders.of(this).get(CatsListViewModel::class.java)
         initialiseRecyclerView()
         initialiseSpinner()
@@ -64,18 +68,41 @@ class MainActivity : AppCompatActivity() {
                     currentFilterCode,
                     true
                 )
-            }.let { it?.let { list -> recyclerAdapter.updateCatList(list) } }
+            }.let {
+                it?.let { list ->
+                    recyclerAdapter.updateCatList(list)
+                    loading_view.visibility = View.GONE
+                    list_error.visibility = View.GONE
+                }
+            }
 
         })
 
-        listViewModel.catsLoadingError.observe(this, Observer { error->
-            error?.let { if (it) cat_recycler_list.visibility = View.GONE else cat_recycler_list.visibility = View.VISIBLE}
+        listViewModel.catsLoadingError.observe(this, Observer { error ->
+            error?.let {
+                if (it) cat_recycler_list.visibility = View.GONE else cat_recycler_list.visibility =
+                    View.VISIBLE
+            }
         })
 
-        listViewModel.catsLoading.observe(this, Observer { loading->
-            loading?.let {  if (it) cat_recycler_list.visibility = View.GONE else cat_recycler_list.visibility = View.VISIBLE}
+        listViewModel.catsLoading.observe(this, Observer { loading ->
+            loading?.let {
+                if (it) cat_recycler_list.visibility = View.GONE else cat_recycler_list.visibility =
+                    View.VISIBLE
+            }
         })
+    }
 
-
+    override fun onItemClicked(cat: Cat) {
+        if (supportFragmentManager.findFragmentByTag(catFragmentClass) == null) {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            fragmentTransaction.add(
+                R.id.root_layout,
+                CatDetailFragment.newInstance(cat),
+                catFragmentClass
+            )
+                .addToBackStack(null)
+                .commit()
+        }
     }
 }

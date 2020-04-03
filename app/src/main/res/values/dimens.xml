@@ -6,4 +6,7 @@
     <dimen name="main_recycler_left_margin">20dp</dimen>
     <dimen name="main_filter_height">30dp</dimen>
     <dimen name="main_recycler_top_margin">20dp</dimen>
+    <dimen name="fragment_image_top_margin">30dp</dimen>
+    <dimen name="fragment_text_top_margin">15dp</dimen>
+    <dimen name="fragment_left_margin">15</dimen>
 </resources>

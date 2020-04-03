@@ -3,8 +3,6 @@ package com.testingkotlin.catganisation.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.testingkotlin.catganisation.R
 import com.testingkotlin.catganisation.di.DaggerApiComponent
@@ -12,6 +10,7 @@ import com.testingkotlin.catganisation.model.Breed
 import com.testingkotlin.catganisation.model.Cat
 import com.testingkotlin.catganisation.model.CatsApi
 import com.testingkotlin.catganisation.util.getProgressDrawable
+import com.testingkotlin.catganisation.util.getShorterDescription
 import com.testingkotlin.catganisation.util.loadImage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -69,7 +68,7 @@ class CatListAdapter(val itemClickListener : OnItemClickListener) : RecyclerView
             cat: Cat,
             itemClickListener: OnItemClickListener
         ) {
-            compDisposable.add(api.getSpecificBreedImage()
+            compDisposable.add(api.getSpecificBreedImage(cat.id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<Breed>>() {
@@ -83,7 +82,8 @@ class CatListAdapter(val itemClickListener : OnItemClickListener) : RecyclerView
                 }
             }))
             name.text = cat.name
-            description.text = cat.description
+
+            description.text = getShorterDescription(cat.description)
             itemView.setOnClickListener {
                 itemClickListener.onItemClicked(cat)
             }

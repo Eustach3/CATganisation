@@ -35,8 +35,6 @@ class LoginViewModel : ViewModel() {
                 loading.value = false
                 loadingError.value = false
                 loginSucceeded.value = true
-                // On complete call either onLoginSuccess or onLoginFailed
-                // onLoginFailed();
             }, 2000
         )
     }

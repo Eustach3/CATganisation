@@ -40,15 +40,15 @@ class CatDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.cat_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val cat: Cat? = arguments?.getParcelable("cat")
+        val cat: Cat = arguments?.getParcelable("cat") ?: return
         val imageView = fragment_img
-        imageDisposable = api.getSpecificBreedImage()
+        val catID : String = cat.id
+        imageDisposable = api.getSpecificBreedImage(catID)
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : DisposableSingleObserver<List<Breed>>() {
@@ -60,11 +60,11 @@ class CatDetailFragment : Fragment() {
                 }
             })
 
-        fragment_name.text = resources.getString(R.string.breed_name, cat?.name)
-        fragment_description.text = cat?.description ?: "Description not found"
-        fragment_country_code.text = resources.getString(R.string.country_code, cat?.countryCode)
-        fragment_temperament.text = resources.getString(R.string.temperament, cat?.temperament)
-        fragment_wikipedia_link.text = resources.getString(R.string.wikipedia_link, cat?.wikipediaLink)
+        fragment_name.text = this.resources.getString(R.string.breed_name, cat.name)
+        fragment_description.text = cat.description
+        fragment_country_code.text = this.resources.getString(R.string.country_code, cat.countryCode)
+        fragment_temperament.text = this.resources.getString(R.string.temperament, cat.temperament)
+        fragment_wikipedia_link.text = resources.getString(R.string.wikipedia_link, cat.wikipediaLink)
     }
 
     override fun onDetach() {

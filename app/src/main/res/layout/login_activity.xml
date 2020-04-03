@@ -17,6 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/login_image"
+            android:layout_gravity="top|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/login_image_margin"/>
+
         <EditText
             android:id="@+id/user_name"
             android:layout_width="match_parent"

@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), CatListAdapter.OnItemClickListener {
     private fun observeViewModel() {
         listViewModel.cats.observe(this, Observer { cats ->
             cats?.filter {
-                if (currentFilterCode.equals("All")) true else it.countryCode.equals(
+                if (currentFilterCode == resources.getStringArray(R.array.Countries)[0]) true else it.countryCode.equals(
                     currentFilterCode,
                     true
                 )
@@ -96,6 +96,7 @@ class MainActivity : AppCompatActivity(), CatListAdapter.OnItemClickListener {
     override fun onItemClicked(cat: Cat) {
         if (supportFragmentManager.findFragmentByTag(catFragmentClass) == null) {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.animator.slide_up,0,0,R.animator.slide_down)
             fragmentTransaction.add(
                 R.id.root_layout,
                 CatDetailFragment.newInstance(cat),

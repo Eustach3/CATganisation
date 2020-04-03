@@ -8,11 +8,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.testingkotlin.catganisation.R
+import com.testingkotlin.catganisation.di.DaggerApiComponent
+import com.testingkotlin.catganisation.model.Breed
+import com.testingkotlin.catganisation.model.CatsApi
+import com.testingkotlin.catganisation.util.getProgressDrawable
+import com.testingkotlin.catganisation.util.loadImage
 import com.testingkotlin.catganisation.viewModel.LoginViewModel
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.login_activity.*
+import java.util.*
+import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
     lateinit var loginViewModel: LoginViewModel
+    lateinit var imageDisposable : DisposableSingleObserver<List<Breed>>
+    @Inject
+    lateinit var api: CatsApi
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +36,25 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         observeViewModel()
         login_button.setOnClickListener{ loginViewModel.validate(user_name.text.toString(), user_password.text.toString()) }
+        setupImage()
+    }
+
+    private fun setupImage() {
+        // Favorite cats
+        val randArray = arrayListOf("abys", "bsho", "chee", "esho", "pixi", "rblu", "sfol")
+        val rndNum = Random().nextInt(randArray.size-1)
+        val rndCatId = randArray[rndNum]
+        imageDisposable = api.getSpecificBreedImage(rndCatId).subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableSingleObserver<List<Breed>>() {
+                override fun onSuccess(list: List<Breed>) {
+                    login_image.loadImage(list[0].url, getProgressDrawable(this@LoginActivity))
+                }
+
+                override fun onError(e: Throwable) {
+
+                }
+            })
 
     }
 
@@ -61,5 +96,10 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginSucceeded.observe(this, Observer { succeeded ->
             succeeded?.let { startActivity(Intent(this, MainActivity::class.java)) }
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        imageDisposable.dispose()
     }
 }

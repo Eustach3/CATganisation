@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="layout_height">100</dimen>
+    <dimen name="login_layout_padding">50dp</dimen>
+    <dimen name="user_password_margin">15dp</dimen>
+    <dimen name="main_recycler_left_margin">20dp</dimen>
+    <dimen name="main_filter_height">30dp</dimen>
+    <dimen name="main_recycler_top_margin">20dp</dimen>
+</resources>

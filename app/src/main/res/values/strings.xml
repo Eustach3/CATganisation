@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">CATganisation</string>
+    <string name="error_login">Login error</string>
+    <string name="userName">User name</string>
+    <string name="password">Password</string>
+    <string name="login_button">LOGIN</string>
+    <string-array name="Countries">
+        <item>AE</item>
+        <item>AU</item>
+        <item>CA</item>
+        <item>CN</item>
+        <item>CY</item>
+        <item>EG</item>
+        <item>FR</item>
+        <item>GR</item>
+        <item>GB</item>
+        <item>IM</item>
+        <item>IR</item>
+        <item>JP</item>
+        <item>MM</item>
+        <item>NO</item>
+        <item>RU</item>
+        <item>SP</item>
+        <item>SO</item>
+        <item>TH</item>
+        <item>US</item>
+    </string-array>
+</resources>
